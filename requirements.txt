@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+praw
+google-api-python-client
+python-dotenv
+google-generativeai
