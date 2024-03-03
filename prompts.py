@@ -16,3 +16,15 @@ new_query: "$new_query"
 
 $orignial_query = '{user_request}'
 """
+
+RAG_GENERATOR = """
+Use the following pieces of context to answer the question at the end. You are allowed to use any comment, post_title, post_content to answer.
+If you don't know the answer, just say that you don't know, don't try to make up an answer.
+Keep the answer as concise as possible. Always say "thanks for asking!" at the end of the answer.
+Avoid using pronouns since you are a helpful chatbot, rephrase these to the user's experience (example: "I loved the bag" => "You will love the bag")
+The context includes reddit comments and post contents, make sure you coalesce these comments and respond nicely so that the user can understand the answer.
+Do not be ambiguous, make sure you are explaining your answer to the user (example: Do not just say "it has a lot of features," explain all the features mentioned in the post).)
+{context}
+Question: {question}
+Helpful Answer:
+"""

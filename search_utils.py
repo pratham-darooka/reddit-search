@@ -2,6 +2,7 @@ from googleapiclient.discovery import build
 import praw
 from file_handling import save_post_to_file, reset_directory
 from query_rewriting import rewrite_query
+from rag import search_posts
 from globals import DIRECTORY, GOOGLE_DEV_KEY, REDDIT_USER_AGENT, REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, GOOGLE_CUSTOM_SEARCH_ENGINE_KEY
 from logger import logger
 
@@ -12,7 +13,7 @@ def get_reddit_posts(query: str) -> dict:
     service = build(
         "customsearch", "v1", developerKey=GOOGLE_DEV_KEY
     )
-    logger.info(f"Searching for: {query}")
+    logger.info(f"Fetching Reddit Posts for: {query}")
     res = (
         service.cse()
         .list(
@@ -21,7 +22,7 @@ def get_reddit_posts(query: str) -> dict:
         )
         .execute()
     )
-    logger.info(f"Successful!")
+    logger.info(f"Successfully fetched posts!")
     logger.debug("Results Obtained:")
     logger.debug(res)
     return res
@@ -60,11 +61,10 @@ def get_relevant_reddit_posts(user_request: str) -> None:
         url = search_result['link']
 
         post_title, post_content, comments = get_post_content_and_comments(url)
-        logger.info(f"--> {post_title}")
+        logger.debug(f"--> {post_title}")
 
         save_post_to_file(url, post_title, post_content, comments, directory=DIRECTORY)
 
 def search_reddit(user_request: str, directory: str) -> str:
     get_relevant_reddit_posts(user_request)
-    answer = "meow"
-    return answer
+    return search_posts(user_request)
