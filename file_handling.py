@@ -24,4 +24,4 @@ def save_post_to_file(url: str, post_title: str, post_content: str, post_comment
     with open(file_path, 'w') as f:
         json.dump(post_data, f)
 
-    logger.info(f'Saved post to: post_{post_id}_{post_title}.json')
+    logger.debug(f'Saved post to: post_{post_id}_{post_title}.json')
